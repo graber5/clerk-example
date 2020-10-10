@@ -3,8 +3,16 @@ import Head from "next/head";
 import { loadClerk, ClerkProvider } from "@clerk/clerk-react";
 import { NavBar } from "@components";
 import "../styles/globals.css";
+import Router from "next/router";
 
-loadClerk(process.env.NEXT_PUBLIC_CLERK_URL || "");
+loadClerk(process.env.NEXT_PUBLIC_CLERK_URL || "", {
+  signInNavigate: (to: string) => {
+    return Router.push("/sign-in/[[...index]]", to);
+  },
+  signUpNavigate: (to: string) => {
+    return Router.push("/sign-up/[[...index]]", to);
+  },
+});
 
 export default function MyApp({ Component, pageProps, router }: AppProps) {
   return (
